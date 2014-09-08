@@ -1,0 +1,452 @@
+// FUNCTIONS
+clGetPlatformInfo(
+    cl_platform_id     platform,
+    cl_platform_info   param_name,
+    size_t             param_value_size,
+    void*              param_value,
+    size_t             *param_value_size_ret);
+clGetDeviceIDs(
+    cl_platform_id   platform,
+    cl_device_type   device_type,
+    cl_uint          num_entries,
+    cl_device_id*    devices,
+    cl_uint*         num_devices);
+clGetDeviceInfo(
+    cl_device_id     device,
+    cl_device_info   param_name, 
+    size_t           param_value_size,
+    voic*            param_value,
+    size_t*          param_value_size_ret);
+clCreateContext(
+    const cl_context_properties*  properties, // ??? wtf
+    cl_device_type                device_type, 
+    const cl_device_id*           devices,
+    (void CL_CLALBACK*            notify_fun)(...),
+    void*                         user_data,
+    cl_int*                       error);
+clCreateContextFromType(
+    const cl_context_properties*  properties, // ??? wtf
+    cl_device_type                device_type, 
+    (void CL_CALLBACK*            notify_func)(...),
+    void*                         user_data,
+    cl_int*                       error);
+clGetContextInfo(
+    cl_context        context,
+    cl_context_info   param_name, // CL_CONTEXT_{NUM_DEVICES,DEVICES,PROPERTIES,REFERENCE_COUNT,D3D10_PREFER_SHARED_RESOURCES_KHR}
+    size_t            param_value_size,
+    void*             param_value,
+    size_t            *param_value_size_ret);
+clRetainContext(
+    cl_context context);
+clReleaseContext(
+    cl_context context);
+clCreateProgramWithSource(
+    cl_context     context,
+    cl_uint        src_count,
+    const char**   src_strings,
+    const size_t*  src_sizes,
+    cl_int*        err_code);
+clCreateProgramWithBinary(
+    cl_context             context,
+    cl_uint                num_devices,
+    const cl_device_id*    devices,
+    const_size_t*          bin_sizes,
+    const unsigned char**  bins,
+    cl_int*                bin_status,
+    cl_int*                err_code);
+clGetProgramInfo(
+    cl_program        program,
+    cl_program_info   param_name,
+    size_t            param_value_size,
+    void*             param_value,
+    size_t*           param_value_size_ret);
+clBuildProgram(
+    cl_program   program,
+    cl_uint      num_devices,
+    const        cl_device_id*   devices,
+    const        char*           options,
+    (void        CL_CALLBACK*    notify_fund)(...),
+    void*        user_data);
+clGetProgramInfo(
+    cl_program        program,
+    cl_program_info   param_name,
+    size_t            param_value_size,
+    void*             param_value,
+    size_t            param_value_size_ret);
+clCreateKernel(
+    cl_program   program,
+    char*        kernel_name,
+    cl_uint*     error);
+clCreateKernelsInProgram(
+    cl_program   program,
+    cl_uint      num_kernels,
+    cl_kernel*   kernels,
+    cl_uint*     num_kernels_ret);
+clGetKernelInfo(
+    cl_kernel        kernel,
+    cl_kernel_info   param_name,
+    void*            param_value);
+clGetProgramBuildInfo(
+    cl_program              program,
+    cl_device_id            device,
+    cl_program_build_info   param_name,
+    size_t                  param_value_size,
+    void                    *param_value,
+    size_t                  *param_value_size_ret);
+clCreateCommandQueue(
+    cl_context                    context,
+    cl_device_id                  device,
+    cl_command_queue_properties   properties,
+    cl_int*                       err);
+clEnqueueTank(
+    cl_command_queue queue,
+    cl_kernel kernel,
+    cl_uint num_events,
+    const cl_event* wait_list,
+    cl_event* event);
+clSetKernelArg(
+    cl_kernel kernel,
+    cl_uint index,
+    size_t size,
+    const void* value);
+clCreateBuffer(
+    cl_context context,
+    cl_mem_flags options,
+    size_t size,
+    void* host_ptr,
+    cl_int* error);
+clCreateSubBuffer(
+    cl_mem buffer,
+    cl_mem_flags flags,
+    cl_buffer_create_type type, -- CL_BUFFER_CREATE_TYPE_REGION
+    const void* info, -- pointer to cl_buffer_region struct
+    cl_int* error);
+clCreateImage2D (
+    cl_context context, 
+    cl_mem_flags opts,
+    const cl_image_format *format, 
+    size_t width, 
+    size_t height,
+    size_t row_pitch, 
+    void *data, 
+    cl_int *error);
+clCreateImage3D (
+    cl_context context, 
+    cl_mem_flags opts,
+    const cl_image_format *format, 
+    size_t width, 
+    size_t height, 
+    size_t depth, 
+    size_t row_pitch, 
+    size_t slice_pitch,
+    void *data, 
+    cl_int *error);
+clGetImageInfo(
+    cl_mem image,
+    cl_image_info param_name,
+    size_t param_value_size,
+    void* param_value,
+    size_t* param_value_size_ret);
+clGetMemObjectInfo(
+    cl_mem object,
+    cl_mem_info param_name,
+    size_t param_value_size,
+    void* param_value,
+    size_t* param_value_size_ret);
+clEnqueueReadBuffer(
+    cl_command_queue   queue,
+    cl_mem             buffer,
+    cl_bool            blocking,
+    size_t             offset,
+    size_t             data_size,
+    void               *ptr,
+    cl_uint            num_events,
+    const              cl_event      *wait_list,
+    cl_event           *event)
+clEnqueueWriteBuffer(
+    cl_command_queue  queue,
+    cl_mem             buffer,
+    cl_bool            blocking,
+    size_t             offset,
+    size_t             data_size,
+    const              void          *ptr,
+    cl_uint            num_events,
+    const              cl_event      *wait_list,
+    cl_event           *event)
+clEnqueueReadImage(
+    cl_command_queue   queue,
+    cl_mem             image,
+    cl_bool            blocking,
+    const              size_t         origin[3],
+    const              size_t         region[3],
+    size_t             row_pitch,
+    size_t             slice_pitch,
+    void               *ptr,
+    cl_uint            num_events,
+    const              cl_event       *wait_list,
+    cl_event           *event)
+clEnqueueWriteImage(
+    cl_command_queue   queue,
+    cl_mem             image,
+    cl_bool            blocking,
+    const              size_t         origin[3],
+    const              size_t         region[3],
+    size_t             row_pitch,
+    size_t             slice_pitch,
+    const              void           *                   ptr,
+    cl_uint            num_events,
+    const              cl_event       *event_wait_list,
+    cl_event           *event)
+clEnqueueReadBufferRect(
+    cl_command_queue   queue,
+    cl_mem             buffer,
+    cl_bool            blocking,
+    const size_t       buffer_origin[3],
+    const size_t       host_origin[3],
+    const size_t       region[3],
+    size_t             buffer_row_pitch,
+    size_t             buffer_slice_pitch,
+    size_t             host_row_pitch,
+    size_t             host_slice_pitch,
+    void               *ptr,
+    cl_uint            num_events,
+    const cl_event     *wait_list,
+    cl_event           *event)
+clEnqueueWriteBufferRect(
+    cl_command_queue   queue,
+    cl_mem             buffer,
+    cl_bool            blocking,
+    const size_t       buffer_origin[3],
+    const size_t       host_origin[3],
+    const size_t       region[3],
+    size_t             buffer_row_pitch,
+    size_t             buffer_slice_pitch,
+    size_t             host_row_pitch,
+    size_t             host_slice_pitch,
+    void               *ptr,
+    cl_uint            num_events,
+    const cl_event     *wait_list,
+    cl_event           *event)
+void* clEnqueueMapBuffer(
+    cl_command_queue queue,
+    cl_mem buffer,
+    cl_bool blocking,
+    cl_map_flags map_flags,
+    size_t offset,
+    size_t data_size,
+    cl_uint num_events,
+    const cl_event *wait_list,
+    cl_event *event,
+    cl_int *errcode_ret)
+void* clEnqueueMapImage(
+    cl_command_queue queue,
+    cl_mem image,
+    cl_bool blocking,
+    cl_map_flags map_flags,
+    const size_t origin[3],
+    const size_t region[3],
+    size_t *row_pitch,
+    size_t *slice_pitch,
+    cl_uint num_events,
+    const cl_event *wait_list,
+    cl_event *event,
+    cl_int *errcode_ret)
+int clEnqueueUnmapMemObject(
+    cl_command_queue queue,
+    cl_mem memobj,
+    void *mapped_ptr,
+    cl_uint num_events,
+    const cl_event *wait_list,
+    cl_event *event)
+clEnqueueCopyBuffer(
+    cl_command_queue queue,
+    cl_mem src_buffer,
+    cl_mem dst_buffer,
+    size_t src_offset,
+    size_t dst_offset,
+    size_t data_size,
+    cl_uint num_events,
+    const cl_event *wait_list,
+    cl_event *event)
+clEnqueueCopyImage(
+    cl_command_queue queue,
+    cl_mem src_image,
+    cl_mem dst_image,
+    const size_t src_origin[3],
+    const size_t dst_origin[3],
+    const size_t region[3],
+    cl_uint num_events,
+    const cl_event *wait_list,
+    cl_event *event)
+clEnqueueCopyBufferToImage(
+    cl_command_queue queue,
+    cl_mem src_buffer,
+    cl_mem dst_image,
+    size_t src_offset,
+    const size_t dst_origin[3],
+    const size_t region[3],
+    cl_uint num_events,
+    const cl_event *wait_list,
+    cl_event *event)
+clEnqueueCopyImageToBuffer(
+    cl_command_queue queue,
+    cl_mem src_image,
+    cl_mem  dst_buffer,
+    const size_t src_origin[3],
+    const size_t region[3],
+    size_t dst_offset,
+    cl_uint num_events,
+    const cl_event *wait_list,
+    cl_event *event)
+clEnqueueCopyBufferRect(
+    cl_command_queue queue,
+    cl_mem src_buffer,
+    cl_mem dst_buffer,
+    const size_t src_origin[3],
+    const size_t dst_origin[3],
+    const size_t region[3],
+    size_t src_row_pitch,
+    size_t src_slice_pitch,
+    size_t dst_row_pitch,
+    size_t dst_slice_pitch,
+    cl_uint num_events,
+    const cl_event *wait_list,
+    cl_event *event)
+clEncodeNDRangeKernel(
+    cl_command_queue queue,
+    cl_kernel kernel,
+    cl_uint work_dims,
+    const size_t* global_work_offset,
+    const size_t* global_work_size,
+    const size_t* local_work_size,
+    cl_uint num_events,
+    const cl_event* wait_list,
+    cl_event* event);
+cl_int clGetEventInfo(
+    cl_event event, 
+    cl_event_info param_name, 
+    size_t param_value_size, 
+    void *param_value, 
+    size_t *param_size)
+
+// ENUMS / STRUCTS
+cl_device_type
+    CL_DEVICE_TYPE_ALL
+    CL_DEVICE_TYPE_DEFAULT
+    CL_DEVICE_TYPE_CPU
+    CL_DEVICE_TYPE_GPU
+    CL_DEVICE_TYPE_ACCELERATOR
+cl_device_info
+    CL_DEVICE_NAME               : *char
+    CL_DEVICE_VENDOR             : *char
+    CL_DEVICE_EXTENSIONS         : *char
+    CL_DEVICE_GLOBAL_MEM_SIZE    : cl_ulong
+    CL_DEVICE_ADDRESS_BITS       : cl_uint
+    CL_DEVICE_AVAILABLE          : cl_bool
+    CL_DEVICE_COMPILER_AVAILABLE : cl_boo
+cl_platform_info
+    CL_PLATFORM_NAME       : *char
+    CL_PLATFORM_VENDOR     : *char
+    CL_PLATFORM_VERSION    : *char
+    CL_PLATFORM_PROFILE    : *char
+    CL_PLATFORM_EXTENSIONS : *char
+cl_context_property
+    CL_CONTEXT_PLATFORM        : cl_context_id
+    CL_CONTEXT_D3D10_DEVICE_KR : ID3D10Device*
+    CL_GL_CONTEXT_KHR          : OS-Dependent
+    CL_EGL_DISPLAY_KHR         : EGLDisplay
+    CL_GLX_DISPLAY_KHR         : GLXContext
+    CL_WGL_HDC_KHR             : HDC
+    CL_CGL_SHAREGROUP_KHR      : CGLShareGroupObj
+cl_context_info
+    CL_CONTEXT_NUM_DEVICES : cl_uint
+    CL_CONTEXT_DEVICES : *cl_device_id
+    CL_CONTEXT_PROPERTIES : *cl_context_properties
+    CL_CONTEXT_REFERENCE_COUNT : cl_uint
+    CL_CONTEXT_D3D10_PREFER_SHARED_RESOURCES_KHR : cl_bool
+cl_program_info
+    CL_PROGRAM_CONTEXT         : cl_context,
+    CL_PROGRAM_DEVICES         : cl_device_id[]
+    CL_PROGRAM_NUM_DEVICES     : cl_uint
+    CL_PROGRAM_SOURCE          : char[]
+    CL_PROGRAM_BINARIES        : unsigned_char**
+    CL_PROGRAM_BINARY_SIZES    : size_t[]
+    CL_PROGRAM_REFERENCE_COUNT : cl_uint
+cl_program_build_info
+    CL_PROGRAM_BUILD_STATUS : cl_build_status
+    CL_PROGRAM_BUILD_OPTIONS : *char
+    CL_PROGRAM_BUILD_LOG : *char
+cl_kernel_info
+    CL_KERNEL_FUNCTION_NAME : *char
+    CL_KERNEL_NUM_ARGS : cl_uint
+    CL_KERNEL_REFERENCE_COUNT : cl_uint
+    CL_KERNEL_CONTEXT : cl_context
+    CL_KERNEL_PROGRAM : cl_program
+cl_command_queue_properties
+    CL_QUEUE_PROFILING_ENABLE
+    CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE
+cl_mem_flags
+    CL_MEM_READ_WRITE
+    CL_MEM_WRITE_ONLY
+    CL_MEM_READ_ONLY
+    CL_MEM_USE_HOST_PTR
+    CL_MEM_COPY_HOST_PTR
+    CL_MEM_ALLOC_HOST_PTR
+cl_channel_order
+    CL_RGB
+    CL_RGBA
+    CL_ARGB
+    CL_BGRA
+    CL_RG
+    CL_RA
+    CL_R
+    CL_A
+cl_channel_type
+    CL_HALF_FLOAT
+    CL_FLOAT
+    CL_UNSIGNED_INT8
+    CL_UNSIGNED_INT16
+    CL_UNSIGNED_INT32
+    CL_SIGNED_INT8
+    CL_SIGNED_INT16
+    CL_SIGNED_INT32
+    CL_UNORM_INT8
+    CL_UNORM_INT16
+    CL_SNORM_INT8
+    CL_SNORM_INT16
+    CL_UNORM_SHORT_565
+    CL_UNORM_SHORT_555
+    CL_UNORM_INT_101010
+cl_image_info
+    CL_IMAGE_ELEMENT_SIZE
+    CL_IMAGE_WIDTH
+    CL_IMAGE_HEIGHT
+    CL_IMAGE_DEPTH
+    CL_IMAGE_ROW_PITH
+    CL_IMAGE_SLICE_PITCH
+    CL_IMAGE_FORMAT
+    CL_IMAGE_D3D10_SUBRESOURCE_KHR
+cl_mem_info
+    CL_MEM_TYPE : cl_mem_object_type
+    CL_MEM_FLAGS : cl_mem_flags
+    CL_MEM_HOST_PTR : void*
+    CL_MEM_SIZE : size_t
+    CL_MEM_CONTEXT : cl_context
+    CL_MEM_ASSOCIATED_MEMOBJECT : cl_mem
+    CL_MEM_OFFSET : size_t
+    CL_MEM_REFERENCE_COUNT : cl_uint
+    CL_MEM_D3D10_RESOURCE_KHR : ID3D10Resource*
+typedef struct _cl_buffer_region {
+    size_t origin;
+    size_t size; 
+    } cl_buffer_region;
+typedef struct _cl_image_format {
+    cl_channel_order image_channel_order;
+    cl_channel_type image_channel_data_type; 
+    } cl_image_format;
+cl_event_info
+    CL_EVENT_CONTEXT                  : cl_context
+    CL_EVENT_COMMAND_QUEUE            : cl_command_queue
+    CL_EVENT_COMMAND_EXECUTION_STATUS : cl_int
+    CL_EVENT_COMMAND_TYPE             : cl_command_type
+    CL_EVENT_REFERENCE_COUNT          : cl_uint
